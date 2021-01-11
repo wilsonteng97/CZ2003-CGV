@@ -1,0 +1,137 @@
+#VRML V2.0 utf8 
+# Copyright by Liu Qi and Alexei Sourin
+EXTERNPROTO FGeometry [
+exposedField SFString definition
+exposedField MFFloat parameters
+exposedField MFInt32 resolution
+	exposedField SFVec3f bboxCenter
+	exposedField SFVec3f bboxSize
+	exposedField SFString type
+	exposedField MFNode	parents
+	exposedField SFVec2f timeSpan 
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FGeometry"
+EXTERNPROTO FMaterial [
+	exposedField SFString diffuseColor
+	exposedField SFString type
+	exposedField MFColor patternColor
+	exposedField MFFloat patternKey
+	exposedField SFString ambientIntensity
+	exposedField SFString emissiveColor
+	exposedField SFString shininess
+	exposedField SFString specularColor
+	exposedField SFString transparency
+	exposedField MFFloat parameters
+	exposedField MFNode	parents
+	exposedField SFVec2f timeSpan
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FMaterial"
+EXTERNPROTO FTexture3D [
+	exposedField SFString definition
+	exposedField SFString type
+	exposedField MFFloat parameters
+	exposedField MFNode	parents
+	exposedField SFVec2f timeSpan
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FTexture3D"
+EXTERNPROTO FAppearance [
+	exposedField SFNode	material
+	exposedField SFNode	texture
+	exposedField SFNode	textureTransform
+	exposedField SFNode	texture3D
+	exposedField MFNode	parents
+	eventIn	SFBool refresh
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FAppearance"
+EXTERNPROTO FShape [
+	exposedField SFNode	geometry
+	exposedField SFNode	appearance
+	exposedField SFString polygonizer
+	exposedField MFNode	parents
+	exposedField SFTime	startTime
+	exposedField SFTime stopTime
+    exposedField SFTime cycleInterval
+    exposedField SFBool	loop
+	exposedField SFBool	enabled
+	eventOut SFTime	cycleTime
+	eventIn SFFloat set_fraction
+	field SFInt32 frames
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FShape"
+EXTERNPROTO FTransform [
+	exposedField SFString operation
+	exposedField SFString type
+	exposedField SFString polygonizer
+	exposedField MFFloat parameters
+	exposedField SFString center
+	exposedField SFString rotation
+	exposedField SFString scale
+	exposedField SFString scaleOrientation
+	exposedField SFString translation
+	exposedField MFNode children
+	exposedField MFNode	parents
+	eventIn	SFBool refresh
+    exposedField SFVec2f timeSpan
+	exposedField SFTime	startTime
+	exposedField SFTime stopTime
+    exposedField SFTime cycleInterval
+    exposedField SFBool	loop
+	exposedField SFBool	enabled
+	eventOut SFTime	cycleTime
+	eventIn SFFloat set_fraction
+	field SFInt32 frames
+] "http://www3.ntu.edu.sg/home/assourin/FVRML/FVRML.wrl#FTransform"
+FShape {
+polygonizer "analytical"
+	loop FALSE
+	cycleInterval 1
+	appearance FAppearance {
+		material FMaterial {
+			diffuseColor "function frep(x1,y1,z1,t){
+u=x1*(1)+y1*(0)+z1*(0)+(0);
+v=x1*(0)+y1*(1)+z1*(0)+(0);
+w=x1*(0)+y1*(0)+z1*(1)+(0);
+r=(u+2.0)/4.0;
+g=(v+2.0)/4.0;
+b=(w+1.0)/2.0;
+return 0;}"
+			patternKey [0.3, 0.7]
+			patternColor [0 1 0, 1 0 0]
+			timeSpan 0 1
+		}
+		texture3D FTexture3D {
+			definition "0"
+			timeSpan 0 1
+         type "displacement"
+		}
+	}
+	geometry FGeometry {
+		definition "function frep(x1,y1,z1,t){
+						x=x1;
+						y=y1;
+						z=z1;
+						box=min(min(min(min(min(x+2,2-x),y+1),2-y),z+0.1),0.1-z);
+						
+						cylinder=min(min(0.3^2-(z)^2-(y+0.5)^2, 1.5-x), x+1.5);
+						cylinder1=min(min(0.1^2-(z/5)^2-((y+0.5)/1)^2, 1.5-x), x+1.5);
+
+						ellipsoid1=0.5^2-(x+1)^2-(y-1)^2-(z)^2;
+						ellipsoid2=0.5^2-(x-1)^2-(y-1)^2-(z)^2;		
+
+						cone=min(min((((y-1.2)/1)^2-(z/0.5)^2-(x/0.2)^2),1.2-y),y);
+
+						cylinder2=min(min(0.1^2-(x+1)^2-(y-1)^2, 1.5-z), z+1.5);
+						cylinder3=min(min(0.1^2-(x-1)^2-(y-1)^2, 1.5-z), z+1.5);
+
+						fun1=max(box, cylinder);
+						fun2=min(fun1, -cylinder1);
+						fun3=max(fun2, ellipsoid1);
+						fun4=max(fun3, ellipsoid2);
+						fun5=max(fun4, cone);
+						fun6=min(fun5, -cylinder2);
+						fun=min(fun6, -cylinder3);
+
+
+return fun;}"
+		parameters [-1, 1, -1, 1, -1, 1]
+		bboxSize 4 4 2
+		bboxCenter 0 0 0
+		resolution [75, 75, 75]
+		timeSpan 0 1
+	}
+}

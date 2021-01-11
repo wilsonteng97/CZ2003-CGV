@@ -1,0 +1,27 @@
+==============================
+==============================
+   _           _       _____ 
+  | |         | |     | ____|
+  | |     __ _| |__   | |__  
+  | |    / _` | '_ \  |___ \ 
+  | |___| (_| | |_) |  ___) |
+  |______\__,_|_.__/  |____/ 
+                            
+==============================
+==============================
+
+Wilson Thurman Teng 
+U1820540H
+Lab Group SSR2
+
+
+Lab Group	  : SS1
+Attendance number : 33
+Formula 1 = #1
+Formula 2 = #2
+
+The range of parameters v for both object is changed to [0,1] so that the range of parameters v for both objects are the same.
+The range of parameters u for both object is [0,2*pi], which equals to [0, 6.2831853], rather [0,1] to have a notably better performance.
+To convert the range of parameters v from 0 <= phi <= pi to 0 <= v <= 1, the relationship v = phi/pi is used.
+x1, y1, z1 is defined by the formula 1, and x2, y2, z2 is defined by the formula 2.
+To morph from shape formula 1 to shape formula 2, the x,y,z of the shape is defined by x=t*x1+(1-t)*x2, y=t*y1+(1-t)*y2, z=t*z1+(1-t)*z2

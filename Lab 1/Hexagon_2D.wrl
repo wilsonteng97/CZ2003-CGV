@@ -1,0 +1,56 @@
+#VRML V2.0 utf8
+#polygon mesh example: a pyramid
+
+Background {skyColor 0 0 1}
+
+
+Shape {
+	appearance Appearance{
+		material Material { 
+			diffuseColor     1 0.5 0   #red=1, green=0, blue=0
+			specularColor    1 1 1	 #red=1, green=1, blue=1
+			transparency 0   # try values between 0 and 1
+			shininess 1      # shiny surface, try values between 0 and 1
+			}
+		}
+	geometry IndexedFaceSet {
+		coord Coordinate {
+        	point [
+				0.5  	1  		0	#vertex 0
+				-0.5  	1  		0	#vertex 1
+				-1  	0  		0	#vertex 2
+				-0.5  	-1  	0	#vertex 3
+				0.5		-1   	0	#vertex 4
+				1		0  		0	#vertex 5
+                    ]
+                }
+		coordIndex [
+			#Front Side
+			0,  1,  2,  3,  4,  5,  -1,
+			#Back Side
+			5,  4,  3,  2,  1,  0,  -1,
+			]
+			
+	}
+}											   
+
+Transform {
+   translation -4.5 2 0
+   children [
+      Shape {
+	 appearance Appearance {
+	    material Material {
+	       diffuseColor 1 1 0
+	    }
+	 }
+	 geometry Text {
+	    string [
+		    "Hexagon_2D",
+		   ]
+	    fontStyle FontStyle {
+	       size 2
+	    }
+	 }
+      }
+     ]
+}
